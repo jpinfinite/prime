@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1.0">
+  <title>PRIME Estética Automotiva</title>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+  <style>
+    :root{
+      --bg:#0b0b0b;
+      --card:#0f0f10;
+      --muted:#9b9b9b;
+      --gold:#d4af37;
+    }
+
+    body{
+      margin:0;
+      background:linear-gradient(180deg,var(--bg) 0%, #060606 100%);
+      color:#fff;
+      font-family: 'Inter', sans-serif;
+      padding:16px;
+    }
+
+    .app{max-width:420px;margin:0 auto;}
+
+    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px;}
+    .brand{display:flex;align-items:center;gap:10px;}
+    .brand img{width:60px;height:60px;border-radius:50%;object-fit:contain;}
+    .brand h1{margin:0;font-size:18px;}
+    .brand p{margin:0;font-size:12px;color:var(--muted);}
+
+    /* Estilo para o botão de menu */
+    .filter-btn#openMenuBtn {
+        font-size: 24px; /* Tamanho maior para o ícone */
+        padding: 4px 12px;
+        line-height: 1; /* Alinha o texto/ícone verticalmente */
+    }
+
+    .controls{display:flex;gap:8px;}
+    .search{flex:1;background:var(--card);padding:10px;border-radius:12px;display:flex;gap:8px;align-items:center;}
+    .search input{background:transparent;border:0;outline:none;color:inherit;font-size:14px;width:100%;}
+    .filter-btn{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:8px;border-radius:12px;color:#fff;cursor:pointer;}
+
+    .services{display:grid;gap:12px;margin-top:12px;}
+    .service-card{background:rgba(255,255,255,0.03);padding:12px;border-radius:12px;cursor:pointer;transition:all 0.2s ease-in-out;}
+    .service-card:hover{background:rgba(255,255,255,0.05);} /* Efeito hover */
+    .service-card.selected{
+      background: rgba(212, 175, 55, 0.1); /* Um tom dourado claro */
+      border: 1px solid var(--gold);
+      box-shadow: 0 0 10px rgba(212, 175, 55, 0.2);
+    }
+    .service-title{font-weight:700;}
+    .service-desc{font-size:13px;color:var(--muted);}
+    .price{font-weight:700;color:var(--gold);}
+
+    .booking-bar{
+        position:fixed;
+        left:50%;
+        transform:translateX(-50%);
+        bottom:22px;
+        width:calc(100% - 32px);
+        max-width:420px;
+        padding:12px;
+        border-radius:14px;
+        background:rgba(17, 17, 17, 0.85); /* Efeito de transparência */
+        backdrop-filter: blur(5px); /* Efeito de desfoque */
+        -webkit-backdrop-filter: blur(5px); /* Para compatibilidade com Safari */
+        display:flex;
+        align-items:center;
+        gap:12px;
+        box-shadow: 0 0 20px rgba(0,0,0,0.5); /* Adiciona profundidade */
+        z-index: 1000; /* Garante que fique acima de outros elementos */
+    }
+    .booking-btn{background:var(--gold);border:none;padding:10px 14px;border-radius:10px;font-weight:700;color:#080808;cursor:pointer;}
+    .booking-btn:disabled {
+        opacity: 0.6;
+        cursor: not-allowed;
+    }
+
+    .modal-backdrop{position:fixed;inset:0;background:rgba(0,0,0,0.8);display:none;align-items:flex-end;justify-content:center;padding:16px;z-index: 2000;}
+    .modal{width:100%;max-width:420px;background:#0d0d0d;border-radius:14px;padding:16px;box-shadow: 0 -5px 15px rgba(0,0,0,0.3);}
+    .close-modal{background:#333;border:none;color:#fff;padding:8px 12px;border-radius:8px;cursor:pointer;}
+    input,select{width:100%;padding:10px;border-radius:10px;border:1px solid #333;background:#111;color:#fff;margin-bottom:8px;}
+    input[type="date"], input[type="time"] {
+        flex: 1; /* Para ficarem lado a lado na mesma linha */
+    }
+    #formServiceImage {
+        object-fit: cover; /* Garante que a imagem cubra o espaço sem distorção */
+        height: 150px; /* Altura fixa para visualização mobile */
+    }
+  </style>
+</head>
+<body>
+  <div class="app" role="application" aria-label="PRIME - app mockup">
+    <header>
+      <div class="brand">
+        <img src="assets/logo-prime.png" alt="Logo PRIME" />
+        <div>
+          <h1>PRIME Estética</h1>
+          <p class="muted">Estética automotiva · Minimalista · Premium</p>
+        </div>
+      </div>
+      <button class="filter-btn" id="openMenuBtn" aria-label="Abrir Menu">☰</button>
+    </header>
+
+    <div class="controls">
+      <label class="search" for="search">
+        🔍
+        <input id="search" placeholder="Pesquisar serviço" aria-label="Pesquisar serviço" />
+      </label>
+      <button class="filter-btn" id="filterBtn" aria-pressed="false">Filtros</button>
+    </div>
+
+    <main>
+      <section class="services" id="servicesList"></section>
+    </main>
+
+    <div class="booking-bar" id="bookingBar" aria-live="polite">
+      <div class="selected-service">
+        <div style="font-size:13px;color:var(--muted)">Serviço selecionado</div>
+        <div id="selectedName" style="font-weight:700">Nenhum</div>
+      </div>
+      <div>
+        <div style="font-size:12px;color:var(--muted);text-align:right">Preço</div>
+        <div id="selectedPrice" style="font-weight:700;color:var(--gold);text-align:right">—</div>
+      </div>
+      <button class="booking-btn" id="bookBtn" disabled>Agendar</button>
+    </div>
+
+    <div class="modal-backdrop" id="modalBackdrop">
+      <div class="modal">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:12px">
+          <h3>Agendar serviço</h3>
+          <button class="close-modal" id="closeModal">Fechar</button>
+        </div>
+        
+        <div style="margin-bottom: 12px; border-radius: 8px; overflow: hidden; background: #222;">
+          <img id="formServiceImage" src="" alt="Imagem do Serviço" style="width:100%; height:auto; display:none;" />
+        </div>
+
+        <form id="bookingForm">
+          <div style="margin-bottom:8px">
+            <label class="muted">Serviço</label>
+            <div id="formServiceName" style="font-weight:700">—</div>
+          </div>
+          <div class="row" style="margin-bottom:8px;display:flex;gap:8px;">
+            <input id="clientName" type="text" placeholder="Seu nome" required aria-label="Seu nome" />
+            <input id="clientPhone" type="tel" placeholder="Telefone (WhatsApp)" required aria-label="Telefone WhatsApp" />
+          </div>
+          <div style="margin-bottom:8px">
+            <select id="vehicleType" required aria-label="Tipo de veículo">
+              <option value="" disabled selected>Tipo de veículo</option>
+              <option value="carro">Carro</option>
+              <option value="moto">Moto</option>
+              <option value="outro">Outro</option>
+            </select>
+          </div>
+          <div style="display:flex;gap:8px;justify-content:space-between;align-items:center">
+            <input id="date" type="date" required aria-label="Data" />
+            <input id="time" type="time" required aria-label="Hora" />
+          </div>
+          <div style="display:flex;gap:8px;margin-top:12px">
+            <button type="submit" class="booking-btn" style="flex:1">Confirmar Agendamento</button>
+            <button type="button" class="close-modal" id="cancelBtn">Cancelar</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ATENÇÃO: Os caminhos de imagem foram ajustados para os nomes dos arquivos que você forneceu.
+    // Certifique-se que o casing (maiúsculas/minúsculas) está EXATAMENTE igual no seu HD.
+    const servicesData = [
+      { 
+        id: 1, 
+        name: 'Lavagem Detalhada (Carro)', 
+        desc: 'Limpeza profunda externa, descontaminação da pintura, atenção especial às rodas e cera UV.', 
+        price: 'R$ 45,00',
+        image: 'assets/carrosel-prime_01.jpg' 
+      },
+      { 
+        id: 2, 
+        name: 'Lavagem Detalhada (Moto)', 
+        desc: 'Limpeza profunda da moto, acessando partes não detalhadas numa ducha simples.', 
+        price: 'R$ 50,00', 
+        image: 'assets/carrosel-prime_02.jpg' 
+      },
+      { 
+        id: 3, 
+        name: 'Limpeza Detalhada (Interna)', 
+        desc: 'Limpeza minuciosa do interior, com produtos de alta qualidade para remover sujeiras pesadas.', 
+        price: 'R$ 60,00',
+        image: 'assets/carrosel-prime_03.jpg' 
+      },
+      { 
+        id: 4, 
+        name: 'Limpeza de Motor', 
+        desc: 'Proporciona durabilidade às engrenagens, bom fluxo do motor e proteção de 6 meses no verniz.', 
+        price: 'R$ 150,00',
+        image: 'assets/carrosel-prime_04.jpg' 
+      },
+      { 
+        id: 5, 
+        name: 'Higienização Completa', 
+        desc: 'Proporciona um ambiente agradável, elimina bactérias e deixa o carro cheiroso.', 
+        price: 'R$ 300,00',
+        image: 'assets/carrosel-prime_05.jpg' 
+      },
+      {
+        id: 6,
+        name: 'Ducha Moto',
+        desc: 'Lavagem externa para motos.',
+        price: 'R$ 20,00',
+        image: 'assets/MOTO.jpg' // Usando o arquivo MOTO.jpg
+      },
+      {
+        id: 7,
+        name: 'Geral Moto',
+        desc: 'Lavagem completa para motos.',
+        price: 'R$ 20,00', 
+        image: 'assets/MOTO.jpg' // Usando o arquivo MOTO.jpg
+      },
+      {
+        id: 8,
+        name: 'Ducha Carro',
+        desc: 'Lavagem externa para carros.',
+        price: 'R$ 18,00',
+        image: 'assets/carro prime.jpg' // Usando o arquivo carro prime.jpg
+      },
+      {
+        id: 9,
+        name: 'Geral Carro',
+        desc: 'Lavagem completa para carros.',
+        price: 'R$ 35,00',
+        image: 'assets/carro prime.jpg' // Usando o arquivo carro prime.jpg
+      }
+    ];
+
+    const servicesList = document.getElementById('servicesList');
+    const selectedName = document.getElementById('selectedName');
+    const selectedPrice = document.getElementById('selectedPrice');
+    const bookBtn = document.getElementById('bookBtn');
+    const modalBackdrop = document.getElementById('modalBackdrop');
+    const formServiceName = document.getElementById('formServiceName');
+    const formServiceImage = document.getElementById('formServiceImage'); 
+    let selectedService = null;
+
+    function renderServices(){
+      servicesList.innerHTML = '';
+      servicesData.forEach(s=>{
+        const card = document.createElement('div');
+        card.className='service-card';
+        card.innerHTML = `
+          <div class="service-title">${s.name}</div>
+          <div class="service-desc">${s.desc}</div>
+          <div class="price">${s.price}</div>`;
+        card.onclick=(event)=>selectService(s, event); 
+        servicesList.appendChild(card);
+      });
+    }
+
+    function selectService(s, event){
+        // Remove a classe 'selected' de todos os cartões
+        document.querySelectorAll('.service-card').forEach(card => card.classList.remove('selected'));
+
+        selectedService = s;
+        selectedName.textContent = s.name;
+        selectedPrice.textContent = s.price;
+        bookBtn.disabled = false;
+
+        // Adiciona a classe 'selected' ao cartão clicado
+        if (event && event.currentTarget) {
+            event.currentTarget.classList.add('selected');
+        }
+    }
+
+    bookBtn.onclick=()=>{
+      if(!selectedService) return;
+      formServiceName.textContent = selectedService.name + " · " + selectedService.price;
+      
+      // Carrega a imagem no modal
+      if (selectedService.image) {
+        formServiceImage.src = selectedService.image;
+        formServiceImage.style.display = 'block'; // Mostra a imagem
+      } else {
+        formServiceImage.style.display = 'none'; // Esconde se não houver imagem
+      }
+
+      modalBackdrop.style.display="flex";
+    };
+
+    // Função de fechamento do modal unificada
+    const closeModal = () => {
+        modalBackdrop.style.display = "none";
+        formServiceImage.style.display = 'none'; // Esconde a imagem ao fechar
+        formServiceImage.src = ''; // Limpa a src
+    };
+
+    document.getElementById('closeModal').onclick = closeModal;
+    document.getElementById('cancelBtn').onclick = closeModal;
+
+    document.getElementById('bookingForm').onsubmit=(e)=>{
+      e.preventDefault();
+      
+      const clientName = document.getElementById('clientName').value;
+      const clientPhone = document.getElementById('clientPhone').value;
+      const vehicleType = document.getElementById('vehicleType').value;
+      const date = document.getElementById('date').value;
+      const time = document.getElementById('time').value;
+
+      let confirmationMessage = `✅ Agendamento confirmado!\n`;
+      confirmationMessage += `Serviço: ${selectedService.name} (${selectedService.price})\n`;
+      confirmationMessage += `Cliente: ${clientName}\n`;
+      confirmationMessage += `Telefone: ${clientPhone}\n`;
+      confirmationMessage += `Veículo: ${vehicleType}\n`;
+      confirmationMessage += `Data: ${date} às ${time}`;
+
+      alert(confirmationMessage);
+
+      closeModal(); // Fecha o modal
+      
+      // Limpa a seleção e campos do formulário após o agendamento
+      selectedService = null;
+      selectedName.textContent = 'Nenhum';
+      selectedPrice.textContent = '—';
+      bookBtn.disabled = true;
+      document.querySelectorAll('.service-card').forEach(card => card.classList.remove('selected'));
+      document.getElementById('bookingForm').reset();
+    };
+
+    renderServices();
+  </script>
+</body>
+</html>

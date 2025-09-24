@@ -1,68 +1,67 @@
-// ATENÇÃO: Verifique se os nomes dos arquivos na pasta assets estão EXATAMENTE
-// iguais a estes (incluindo maiúsculas/minúsculas e a extensão .jpg)
+// TODOS OS CAMINHOS DE IMAGEM FORAM ATUALIZADOS PARA A URL COMPLETA
 const servicesData = [
     { 
         id: 1, 
         name: 'Lavagem Detalhada (Carro)', 
         desc: 'Limpeza profunda externa, descontaminação da pintura, atenção especial às rodas e cera UV.', 
         price: 'R$ 45,00',
-        image: 'assets/carrosel-prime_01.jpg' 
+        image: 'https://jpinfinite.github.io/prime/assets/carrosel-prime_01.jpg' 
     },
     { 
         id: 2, 
         name: 'Lavagem Detalhada (Moto)', 
         desc: 'Limpeza profunda da moto, acessando partes não detalhadas numa ducha simples.', 
         price: 'R$ 50,00', 
-        image: 'assets/carrosel-prime_02.jpg' 
+        image: 'https://jpinfinite.github.io/prime/assets/carrosel-prime_02.jpg' 
     },
     { 
         id: 3, 
         name: 'Limpeza Detalhada (Interna)', 
         desc: 'Limpeza minuciosa do interior, com produtos de alta qualidade para remover sujeiras pesadas.', 
         price: 'R$ 60,00',
-        image: 'assets/carrosel-prime_03.jpg' 
+        image: 'https://jpinfinite.github.io/prime/assets/carrosel-prime_03.jpg' 
     },
     { 
         id: 4, 
         name: 'Limpeza de Motor', 
         desc: 'Proporciona durabilidade às engrenagens, bom fluxo do motor e proteção de 6 meses no verniz.', 
         price: 'R$ 150,00',
-        image: 'assets/carrosel-prime_04.jpg' 
+        image: 'https://jpinfinite.github.io/prime/assets/carrosel-prime_04.jpg' 
     },
     { 
         id: 5, 
         name: 'Higienização Completa', 
         desc: 'Proporciona um ambiente agradável, elimina bactérias e deixa o carro cheiroso.', 
         price: 'R$ 300,00',
-        image: 'assets/carrosel-prime_05.jpg' 
+        image: 'https://jpinfinite.github.io/prime/assets/carrosel-prime_05.jpg' 
     },
     {
         id: 6,
         name: 'Ducha Moto',
         desc: 'Lavagem externa para motos.',
         price: 'R$ 20,00',
-        image: 'assets/MOTO.jpg' 
+        image: 'https://jpinfinite.github.io/prime/assets/MOTO.jpg' 
     },
     {
         id: 7,
         name: 'Geral Moto',
         desc: 'Lavagem completa para motos.',
         price: 'R$ 20,00', 
-        image: 'assets/MOTO.jpg' 
+        image: 'https://jpinfinite.github.io/prime/assets/MOTO.jpg' 
     },
     {
         id: 8,
         name: 'Ducha Carro',
         desc: 'Lavagem externa para carros.',
         price: 'R$ 18,00',
-        image: 'assets/carro prime.jpg' 
+        image: 'https://jpinfinite.github.io/prime/assets/carro prime.jpg' 
     },
     {
         id: 9,
         name: 'Geral Carro',
         desc: 'Lavagem completa para carros.',
         price: 'R$ 35,00',
-        image: 'assets/carro prime.jpg' 
+        image: 'https://jpinfinite.github.io/prime/assets/carro prime.jpg' 
     }
 ];
 

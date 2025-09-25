@@ -13,7 +13,7 @@
     <div class="app" role="application" aria-label="PRIME - app mockup">
         <header>
             <div class="brand">
-                <img src="https://jpinfinite.github.io/prime/assets/logo-prime.png" alt="Logo PRIME" />
+                <img src="assets/logo-prime.png" alt="Logo PRIME" />
                 <div>
                     <h1>PRIME Estética</h1>
                     <p class="muted">Estética automotiva · Minimalista · Premium</p>
@@ -66,14 +66,26 @@
                         <input id="clientName" type="text" placeholder="Seu nome" required aria-label="Seu nome" />
                         <input id="clientPhone" type="tel" placeholder="Telefone (WhatsApp)" required aria-label="Telefone WhatsApp" />
                     </div>
-                    <div style="margin-bottom:8px">
-                        <select id="vehicleType" required aria-label="Tipo de veículo">
-                            <option value="" disabled selected>Tipo de veículo</option>
-                            <option value="carro">Carro</option>
-                            <option value="moto">Moto</option>
-                            <option value="outro">Outro</option>
+                    
+                    <div id="duchaGeralContainer" style="margin-bottom:8px; display:none;">
+                        <select id="duchaOrGeral" aria-label="Escolha entre Ducha ou Geral">
+                            <option value="ducha" selected>Opção de Lavagem: Ducha</option>
+                            <option value="geral">Opção de Lavagem: Geral</option>
                         </select>
                     </div>
+
+                    <div style="margin-bottom:8px">
+                        <select id="vehiclePorte" required aria-label="Porte do veículo">
+                            <option value="" disabled selected>Porte do Veículo</option>
+                            <option value="pequeno">Carro - Pequeno (Ex: Palio, Corsa)</option>
+                            <option value="medio">Carro - Médio (Ex: Hilux, Compass, SUVs)</option>
+                            <option value="grande">Carro - Grande (Ex: Carroceria maior)</option>
+                            <option value="van-pequena">Van - Pequena (Ex: Kangoo, Fiorino)</option>
+                            <option value="van-media">Van - Média (Ex: Sprinter, Ducato)</option>
+                            <option value="caminhao-pequeno">Caminhão - Pequeno (Ex: HR, Bongo)</option>
+                        </select>
+                    </div>
+
                     <div style="display:flex;gap:8px;justify-content:space-between;align-items:center">
                         <input id="date" type="date" required aria-label="Data" />
                         <input id="time" type="time" required aria-label="Hora" />

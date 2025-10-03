@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0">
+    <title>PRIME Estética Automotiva</title>
+    
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap">
+    
+    <link rel="stylesheet" href="style.css"> 
+</head>
+<body>
+    <div class="app" role="application" aria-label="PRIME - app mockup">
+        <header>
+            <div class="brand">
+                <img src="assets/logo-prime.png" alt="Logo PRIME" />
+          
+                <div>
+                    <h1>Prime Detailing</h1>
+                    <p class="muted">Estética automotiva · Premium</p>
+                </div>
+            </div>
+            <button class="filter-btn" id="openMenuBtn" aria-label="Abrir Menu">☰</button>
+   
+         </header>
+
+        <div class="rating-box">
+            <span class="rating-value">4.9</span>
+            <span class="stars">★★★★★</span>
+            <span class="review-count">(206 Avaliações)</span>
+        </div>
+        <div class="controls">
+            <label class="search" for="search">
+                🔍
+                <input id="search" placeholder="Pesquisar serviço" aria-label="Pesquisar serviço" readonly />
+            </label>
+            <button class="filter-btn" id="filterBtn" aria-pressed="false">Filtros</button>
+      
+       </div>
+
+        <main>
+            <div class="selected-service-info">
+                <p class="muted">Serviço Selecionado:</p>
+                <div class="selection-details">
+                    <span id="selectedName">Nenhum</span>
+                    <span class="price-value" id="selectedPrice">—</span>
+                    <button class="clear-btn" id="clearBtn" aria-label="Limpar Seleção">Limpar</button>
+                </div>
+            </div>
+            
+            <div class="services-list" id="servicesList">
+                </div>
+        </main>
+    </div>
+
+    <div class="modal-backdrop" id="modalBackdrop" style="display: none;">
+        <div class="modal-content">
+            <button class="close-modal" id="closeModal">X</button>
+            <img id="formServiceImage" class="modal-image" src="" alt="Imagem do Serviço" style="display: none;"/>
+            <h2>Agendar: <span id="formServiceName"></span></h2>
+            
+            <form id="bookingForm" onsubmit="return false;">
+                
+                <div id="duchaGeralContainer" style="margin-bottom:8px; display: none;">
+                    <select id="duchaOrGeral" onchange="updatePriceDisplay()" style="margin-bottom:8px;">
+                        <option value="">Selecione a opção</option>
+                        <option value="ducha">Ducha (Lavagem Simples)</option>
+                        <option value="geral">Lavagem Geral (Simples)</option>
+                    </select>
+
+                    <select id="vehiclePorte" onchange="updatePriceDisplay()">
+                        <option value="">Selecione o Porte do Veículo</option>
+                        <optgroup label="Carro">
+                            <option value="pequeno">Pequeno (ex: Gol, Celta)</option>
+                            <option value="medio">Médio (ex: Hilux, Compass)</option>
+                            <option value="grande">Grande (ex: Sedan/SUV maiores)</option>
+                        </optgroup>
+                        <optgroup label="Van">
+                            <option value="van-pequena">Van Pequena (ex: Ducato antiga)</option>
+                            <option value="van-media">Van Média</option>
+                            <option value="van-grande">Van Grande (ex: Sprinter)</option>
+                        </optgroup>
+                        <optgroup label="Caminhão">
+                            <option value="caminhao-pequeno">Pequeno (ex: HR, Bongo)</option>
+                            <option value="caminhao-medio">Médio</option>
+                            <option value="caminhao-grande">Grande</option>
+                        </optgroup>
+                    </select>
+                </div>
+                
+                <div id="bancosContainer" style="margin-bottom:8px; display: none;">
+                    <p class="muted" style="margin-top:0; margin-bottom: 5px; text-align: left;">
+                        * Preço varia por quantidade de bancos: R$60/banco frente e adicionais, R$140/banco traseiro (3 lugares).
+                    </p>
+                    <div style="display: flex; gap: 8px;">
+                        <select id="bancosFrente" onchange="updatePriceDisplay()" required style="flex-grow: 1;">
+                            <option value="">Bancos Dianteiros</option>
+                            <option value="1">1 Banco (Caminhão/Van)</option>
+                            <option value="2">2 Bancos (Motorista e Carona)</option>
+                            <option value="3">3 Bancos (Van/Caminhão)</option>
+                        </select>
+                        <select id="bancosTras" onchange="updatePriceDisplay()" required style="flex-grow: 1;">
+                            <option value="">Bancos Traseiros</option>
+                            <option value="0">Sem Banco Traseiro</option>
+                            <option value="3">Banco Traseiro (3 Lugares)</option>
+                            <option value="4">4 Lugares Individuais (Van/Doblo)</option>
+                            <option value="5">5 Lugares Individuais (Van/Doblo)</option>
+                            <option value="6">6 Lugares Individuais (Van/Doblo)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div style="margin-bottom:8px">
+                    <input type="text" id="couponCode" placeholder="Cupom de Desconto (Opcional)" oninput="updatePriceDisplay()">
+                </div>
+
+                <div class="final-price-container">
+                    <p class="base-price-display" id="calculatedPriceDisplay">
+                        Preço Estimado: R$ —
+                    </p>
+
+                    <div class="discount-price-display" id="discountDisplay">
+                    </div>
+                </div>
+
+                <div style="display: flex; gap: 8px; margin-bottom: 5px;">
+                    <input type="date" id="date" required aria-label="Data">
+                    <input type="time" id="time" required aria-label="Hora">
+                </div>
+                
+                <p class="muted" style="margin-bottom: 20px; font-size: 0.85rem; text-align: center;">
+                    Horário de Funcionamento: 09:00 às 19:00. <strong style="color: #FF6347;">Fechado às Terças-feiras.</strong>
+                </p>
+
+                <input type="text" id="clientName" placeholder="Seu Nome Completo" required style="margin-bottom: 8px;">
+                <input type="tel" id="clientPhone" placeholder="Seu WhatsApp (apenas números)" required style="margin-bottom: 20px;">
+                
+                <button type="submit" class="submit-btn">CONFIRMAR AGENDAMENTO</button>
+                <button type="button" class="cancel-btn" id="cancelBtn">CANCELAR</button>
+            </form>
+        </div>
+    </div>
+    
+    <div class="modal-backdrop" id="filterModalBackdrop" style="display: none;">
+        <div class="modal-content filter-modal">
+            <button class="close-modal" id="closeFilterModal">X</button>
+            <h2>Filtros</h2>
+            <p class="muted">Escolha a categoria para refinar sua busca:</p>
+
+            <div class="filter-buttons-container">
+                <button class="filter-option active" data-category="todos">Todos os Serviços</button>
+                <button class="filter-option" data-category="carro">Serviços para Carro</button>
+                <button class="filter-option" data-category="moto">Serviços para Moto</button>
+                <button class="filter-option" data-category="pacote">Pacotes em Promoção</button> </div>
+        </div>
+    </div>
+
+    <div class="menu-backdrop" id="menuBackdrop" style="display: none;">
+        <div class="side-menu" id="sideMenu">
+            <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 20px;">
+                <h3>Menu PRIME</h3>
+                <button class="close-modal" id="closeMenuBtn">X</button>
+            </div>
+
+            <nav class="menu-nav">
+                <a href="https://wa.me/5521997759751" target="_blank" class="menu-item">
+                    <img src="assets/whatsapp.png" alt="WhatsApp" class="menu-icon">
+                    Fale Conosco (21) 99775-9751
+                </a>
+                <a href="https://www.instagram.com/prim3esteticautomotiva?igsh=YzljYTk1ODg3Zg==" target="_blank" class="menu-item">
+                    <img src="assets/instagram.png" alt="Instagram" class="menu-icon">
+                    Instagram
+                </a>
+                <a href="https://maps.app.goo.gl/CnUSrPEh9qopsN1s6?g_st=awb" target="_blank" class="menu-item">
+                    <img src="assets/maps.png" alt="Localização" class="menu-icon">
+                    Localização
+                </a>
+            </nav>
+        </div>
+    </div>
+    
+    <button id="fixedBookBtn" disabled>AGENDAR VIA WHATSAPP</button>
+    
+    <script src="script.js"></script>
+</body>
+</html>

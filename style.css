@@ -1,0 +1,629 @@
+/* --- VARIÁVEIS DE CORES --- */
+:root {
+    --bg-color: #1a1a1a;
+    --text-color: #f0f0f0;
+    --muted: #999;
+    --gold: #FFD700;
+    --primary: #FFD700; /* Cor de destaque (ouro) - USADA APENAS EM PREÇOS E NOTAS */
+    --soft-gray: #282828; /* Fundo secundário mais claro */
+}
+
+/* --- ESTILOS BÁSICOS E LAYOUT --- */
+body {
+    background-color: #222;
+    color: var(--text-color);
+    font-family: 'Inter', sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+}
+
+.app {
+    width: 100%;
+    max-width: 400px; 
+    background-color: var(--bg-color);
+    padding: 16px;
+    padding-bottom: 70px; 
+    box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    display: flex;
+    flex-direction: column;
+}
+
+/* Header & Brand */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.brand {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.brand img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    /* NOVO: Borda menos chamativa */
+    border: 1px solid var(--muted); 
+}
+
+header h1 {
+    /* NOVO: Titulo principal em branco, mais clean */
+    color: var(--text-color); 
+    font-size: 1.3rem; 
+    margin: 0;
+}
+
+.muted {
+    font-size: 0.75rem;
+    color: var(--muted);
+    margin: 0;
+}
+
+/* --- CAIXA DE AVALIAÇÃO (RATING) --- */
+.rating-box {
+    background-color: var(--soft-gray); 
+    border: 1px solid #333; 
+    /* NOVO: Padding reduzido para compactar */
+    padding: 8px 16px; 
+    border-radius: 8px;
+    margin-bottom: 15px; /* Espaçamento menor */
+    
+    /* NOVO: Usamos flex para alinhar o conteúdo na linha */
+    display: flex; 
+    justify-content: flex-start; /* Alinha à esquerda */
+    align-items: center;
+    gap: 8px; /* Espaço entre os elementos */
+    
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.4); 
+}
+
+/* NOVO: Estrutura em linha (removido .rating-item) */
+.rating-value {
+    /* NOVO: Tamanho da nota mais discreto */
+    font-size: 1.1rem; 
+    font-weight: 700;
+    color: var(--primary); 
+    line-height: 1; 
+}
+
+.stars {
+    /* NOVO: Tamanho das estrelas reduzido */
+    font-size: 1rem;
+    color: var(--primary); 
+    line-height: 1;
+}
+
+.review-count {
+    /* NOVO: Unifica as informações de avaliações */
+    font-size: 0.8rem;
+    color: var(--muted);
+    font-weight: 500; 
+}
+/* --- FIM CAIXA DE AVALIAÇÃO --- */
+
+
+/* Botões de Filtro/Menu */
+.filter-btn {
+    background: #282828; /* Fundo mais escuro no botão */
+    border: none; /* Borda removida */
+    color: var(--text-color);
+    padding: 8px 12px;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 0.9rem;
+    font-weight: 700;
+}
+
+/* Controls (Busca e Filtro) */
+.controls {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 20px;
+}
+
+.search {
+    flex-grow: 1;
+    background-color: var(--soft-gray); /* Fundo mais claro */
+    border-radius: 8px;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--muted);
+    cursor: pointer;
+}
+
+.search input {
+    background: none;
+    border: none;
+    color: var(--text-color);
+    font-size: 1rem;
+    flex-grow: 1;
+    cursor: pointer;
+}
+.search input:focus {
+    outline: none;
+}
+
+/* --- SEÇÃO DE SERVIÇO SELECIONADO --- */
+.selected-service-info {
+    background-color: var(--soft-gray);
+    padding: 15px;
+    border-radius: 12px;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.selected-service-info p {
+    margin: 0;
+    font-size: 0.85rem;
+    color: var(--muted);
+}
+
+.selection-details {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#selectedName {
+    font-size: 1.1rem;
+    font-weight: 700;
+    flex-grow: 1;
+    /* NOVO: Título do serviço selecionado em branco */
+    color: var(--text-color); 
+}
+
+.price-value {
+    font-size: 1.2rem;
+    font-weight: 700;
+    color: var(--primary); /* Mantém o destaque no preço */
+    margin-left: 10px;
+    white-space: nowrap;
+}
+
+.clear-btn {
+    background: #444;
+    color: var(--text-color);
+    border: none;
+    padding: 5px 10px;
+    border-radius: 6px;
+    font-size: 0.75rem;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+
+/* --- BOTÃO FIXO DE AGENDAMENTO (RODAPÉ) --- */
+#fixedBookBtn {
+    position: fixed; 
+    bottom: 0; 
+    left: 50%; 
+    transform: translateX(-50%);
+    
+    max-width: 384px; 
+    width: 90%; 
+    z-index: 1000; 
+
+    background-color: var(--primary);
+    color: #1a1a1a;
+    border: none;
+    padding: 14px; /* Aumentado um pouco */
+    border-radius: 8px 8px 0 0; 
+    font-weight: 800; /* Mais Bold para o botão de ação */
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background-color 0.2s, opacity 0.3s; 
+    
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+}
+
+#fixedBookBtn:disabled {
+    background-color: #555;
+    color: #999;
+    cursor: not-allowed;
+}
+
+#fixedBookBtn.hidden {
+    display: none;
+    opacity: 0;
+}
+
+
+/* --- LISTA DE SERVIÇOS --- */
+.services-list {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.service-card {
+    background-color: var(--soft-gray);
+    padding: 15px;
+    border-radius: 8px;
+    cursor: pointer;
+    /* NOVO: Borda menos chamativa, apenas para o estado selecionado */
+    border: 1px solid transparent; 
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.service-card:hover {
+    background-color: #333;
+}
+
+.service-card.selected {
+    /* NOVO: Apenas uma borda sutil ao redor do card */
+    border-color: #555; 
+    background-color: #333;
+    /* NOVO: Efeito de sombra interna leve para destacar */
+    box-shadow: inset 0 0 5px rgba(255, 215, 0, 0.1); 
+}
+
+/* Container principal do card para alinhamento */
+.service-main-info {
+    display: flex;
+    gap: 15px; 
+    align-items: flex-start;
+}
+
+/* Container da Imagem */
+.service-image-container {
+    flex-shrink: 0; 
+    width: 60px;
+    height: 60px;
+    /* NOVO: Borda da imagem mais suave */
+    border: 1px solid #444;
+    border-radius: 8px; 
+    overflow: hidden; 
+}
+
+.service-image-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; 
+    display: block;
+}
+
+/* Container do Conteúdo de Texto e Preço */
+.service-content {
+    flex-grow: 1; 
+    display: flex;
+    flex-direction: column;
+    gap: 4px; 
+}
+
+/* Linha de Título e Botão de Detalhes */
+.service-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.service-title {
+    /* NOVO: Títulos em branco, mais clean. O dourado era muito pesado */
+    font-weight: 700;
+    font-size: 1rem;
+    color: var(--text-color); 
+    margin: 0;
+}
+
+/* Estilo do botão VER */
+.details-toggle-btn {
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 0.8rem;
+    font-weight: 600; /* Suavizado */
+    cursor: pointer;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 5px;
+}
+
+.details-toggle-btn:hover {
+    color: var(--primary);
+}
+
+.arrow-icon {
+    transition: transform 0.2s ease-in-out;
+}
+
+/* Rotação da seta quando expandido */
+.details-toggle-btn.open .arrow-icon {
+    transform: rotate(180deg);
+}
+
+.service-card .price {
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: var(--primary); /* Mantém o destaque no preço */
+}
+
+/* Garante que o span riscado nos pacotes seja mutado */
+.service-card .price span {
+    color: var(--muted) !important;
+}
+
+
+/* Painel de Detalhes Expandido */
+.service-details-panel {
+    background-color: #333;
+    color: var(--text-color);
+    padding: 10px;
+    border-radius: 6px;
+    margin-top: 10px;
+    overflow: hidden;
+    max-height: 0;
+    opacity: 0;
+    transition: max-height 0.3s ease-in-out, opacity 0.3s ease-in-out;
+    font-size: 0.9rem;
+    line-height: 1.4;
+}
+
+.service-details-panel.open {
+    max-height: 200px;
+    opacity: 1;
+}
+
+.service-details-panel strong {
+    color: var(--primary);
+}
+
+
+/* --- MODAL DE AGENDAMENTO --- */
+.modal-backdrop, .menu-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+}
+
+.modal-content {
+    background: var(--bg-color);
+    padding: 20px;
+    border-radius: 12px;
+    width: 90%;
+    max-width: 350px;
+    position: relative;
+    max-height: 90vh; 
+    overflow-y: auto;
+}
+
+.close-modal {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    background: none;
+    border: none;
+    color: var(--muted);
+    font-size: 1.2rem;
+    cursor: pointer;
+}
+
+.modal-image {
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 10px;
+}
+
+.modal-content h2 {
+    font-size: 1.2rem;
+    color: var(--text-color); /* Título do Modal em branco */
+    margin: 10px 0 5px;
+}
+
+.modal-content h2 span {
+    color: var(--primary);
+}
+
+
+/* Estilos de Formulário */
+#bookingForm input[type="text"], 
+#bookingForm input[type="tel"], 
+#bookingForm input[type="date"], 
+#bookingForm input[type="time"],
+#bookingForm select {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #444; /* Borda mais suave */
+    border-radius: 6px;
+    background-color: #282828;
+    color: var(--text-color);
+    box-sizing: border-box;
+    font-size: 1rem;
+}
+
+#bookingForm select option {
+    background-color: #282828;
+    color: var(--text-color);
+}
+
+/* Exibição do Preço Estimado e Desconto no Modal */
+.final-price-container {
+    background-color: #222; 
+    padding: 12px; /* Aumentado o padding */
+    border-radius: 8px;
+    margin: 15px 0;
+    /* NOVO: Borda do preço final suavizada */
+    border: 1px solid var(--primary); 
+}
+
+/* Estilo para o Preço Base/Estimado (riscado) */
+.base-price-display {
+    text-align: center;
+    font-size: 0.9rem;
+    font-weight: 400;
+    color: var(--text-color);
+    margin: 0;
+    padding-bottom: 5px;
+}
+
+/* Estilo para o Desconto e Preço Final */
+.discount-price-display {
+    text-align: center;
+    font-weight: 700;
+}
+
+/* Detalhe do Cupom Aplicado */
+.discount-applied {
+    font-size: 0.9rem;
+    color: #4CAF50; /* Destaca o desconto em verde */
+    margin-bottom: 5px;
+}
+
+/* Valor do Preço Final */
+.final-price-value {
+    font-size: 1.3rem;
+    color: var(--primary);
+    margin-top: 5px;
+}
+
+/* Mensagem de Erro do Cupom */
+.coupon-error {
+    font-size: 0.85rem;
+    color: #FF6347; /* Vermelho para erro */
+    margin-bottom: 5px;
+}
+
+
+#bookingForm .submit-btn {
+    background-color: var(--primary);
+    color: #1a1a1a;
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 800; /* Mais Bold */
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+    margin-bottom: 8px;
+}
+
+#bookingForm .cancel-btn {
+    background-color: #444;
+    color: var(--text-color);
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    width: 100%;
+}
+
+/* --- MODAL DE FILTROS & SIDE MENU --- */
+.filter-modal h2 {
+    margin-top: 0;
+}
+
+.filter-buttons-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 15px;
+}
+
+.filter-option {
+    background-color: #282828;
+    color: var(--text-color);
+    /* Borda removida */
+    border: none;
+    padding: 12px;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 600; /* Suavizado */
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.2s, background-color 0.2s;
+}
+
+.filter-option:hover {
+    background-color: #333;
+}
+
+.filter-option.active {
+    background-color: var(--primary);
+    color: #1a1a1a;
+    border-color: var(--primary);
+}
+
+
+.menu-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.0);
+    transition: background 0.3s ease-in-out;
+    display: none;
+    z-index: 2000;
+    justify-content: flex-end;
+}
+
+.menu-backdrop.open {
+    background: rgba(0, 0, 0, 0.8);
+    display: block; 
+}
+
+.side-menu {
+    position: fixed;
+    top: 0;
+    right: -300px;
+    width: 280px;
+    max-width: 90%;
+    height: 100%;
+    background: #1f1f1f;
+    padding: 20px;
+    box-shadow: -5px 0 15px rgba(0, 0, 0, 0.5);
+    transition: right 0.3s ease-in-out;
+    z-index: 2001;
+}
+
+.side-menu.open {
+    right: 0;
+}
+
+.menu-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.menu-item {
+    display: flex; 
+    align-items: center; 
+    padding: 15px;
+    background: #282828;
+    color: var(--text-color);
+    text-decoration: none;
+    border-radius: 8px;
+    font-weight: 600; /* Suavizado */
+    font-size: 1rem;
+    cursor: pointer;
+    border: none;
+    text-align: left;
+}
+
+.menu-icon {
+    width: 20px;
+    height: 20px;
+    margin-right: 15px;
+}

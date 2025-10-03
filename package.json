@@ -1,0 +1,12 @@
+{
+  "name": "prime-detaling-website",
+  "version": "1.0.0",
+  "description": "Website de Detalhamento Automotivo.",
+  "main": "index.js",
+  "scripts": {
+    "start": "echo 'Hello from Node'"
+  },
+  "engines": {
+    "node": "22"
+  }
+}
